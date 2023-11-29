@@ -3,6 +3,7 @@ import logo from "./../assets/images/button.png";
 import { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
   
@@ -13,9 +14,9 @@ function Profile() {
     contact: "",
   });
 
-
+  const emaill = window.localStorage.getItem("email");
   const getUser = async () => {
-    let emaill = "saifi@gmail.com";
+  console.log(emaill);
     try {
       let res = await axios.post("http://localhost:8000/api/user/single-user", {
         params: {
@@ -34,9 +35,14 @@ function Profile() {
     }
   }
 
+  const navigate = useNavigate()
   useEffect(() => {
+  
+    if (window.localStorage.getItem("email") != "x"){
+      navigate('/')
+    }
     getUser();
-  }, []);
+  })
 
     return (
       

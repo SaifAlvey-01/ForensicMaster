@@ -19,10 +19,10 @@ function NewPass() {
     new: "",
   });
 
-
+  const emaill = window.localStorage.getItem("email");
   const getUser = async () => {
-    let emaill = "saifi@gmail.com";
     try {
+      console.log(emaill);
       let res = await axios.post("http://localhost:8000/api/user/single-user", {
         params: {
           email: emaill

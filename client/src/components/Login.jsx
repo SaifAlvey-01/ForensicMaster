@@ -9,6 +9,8 @@ import {
   email_validation,
   password_validation,
 } from './utils/inputValidations';
+import { useDispatch } from "react-redux";
+import { setUser } from "../state/user/userSlice";
 
 function Login() {
 
@@ -20,6 +22,8 @@ function Login() {
     error: false,
     loading: true,
   });
+
+  const dispatch = useDispatch();
 
   const onSubmit = methods.handleSubmit(data => {
     console.log(data)
@@ -51,27 +55,23 @@ function Login() {
           password: "",
         });
       } else if (responseData.token) {
+        infom(data.email);
         setData({ email: "", password: "", loading: false, error: false });
         localStorage.setItem("jwt", JSON.stringify(responseData));
-        //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-        window.location.href = "/Login";
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const infom = (email) => {
+    dispatch(setUser({
+      email: email,
+      plan: 0,
+      dark: false,
+    }));
+  }
+
   const goSubmit = (e) => {
     e.preventDefault();
     onSubmit();

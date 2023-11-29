@@ -6,31 +6,14 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  IconButton,
   Avatar,
   Typography,
 } from "@material-tailwind/react";
-
-function ClockIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="h-3 w-3"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-      />
-    </svg>
-  );
-}
+import { useDispatch } from "react-redux";
+import { reset } from '../state/user/userSlice';
 
 function Navbar() {
+  const dispatch = useDispatch();
   return (
     <div>
     <nav className="bg-white flex border-gray-200 dark:bg-gray-900 dark:border-gray-700">
@@ -66,7 +49,7 @@ function Navbar() {
           </svg>
         </button>
         <div className="hidden w-full lg:block lg:w-auto" id="navbar-dropdown">
-          <ul className="flex flex-col font-medium p-4 lg:p-0 lg:pt-1.5 border border-gray-100 rounded-lg bg-gray-50 lg:flex-row lg:space-x-8 lg:border-0 lg:bg-white dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">
+          <ul className="flex flex-col ml-20 font-medium p-4 lg:p-0 lg:pt-1.5 border border-gray-100 rounded-lg bg-gray-50 lg:flex-row lg:space-x-8 lg:border-0 lg:bg-white dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <button
                 id="dropdownNavbarLinkA"
@@ -202,113 +185,13 @@ function Navbar() {
           </ul>
         </div>
       </div>
-      <div className="">
-        <div>
-          <Menu>
-            <MenuHandler>
-              <IconButton variant="text">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-8 w-8 mr-2 hover:animate-spin mt-8"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </IconButton>
-            </MenuHandler>
-            <MenuList className="flex flex-col gap-2">
-              <MenuItem className="flex items-center gap-4 py-2 pr-8 pl-2">
-                <Avatar
-                  variant="circular"
-                  alt="tania andrew"
-                  src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-                />
-                <div className="flex flex-col gap-1">
-                  <Typography
-                    variant="small"
-                    color="gray"
-                    className="font-normal"
-                  >
-                    <span className="font-medium text-blue-gray-900">
-                      Tania
-                    </span>{" "}
-                    send you a message
-                  </Typography>
-                  <Typography
-                    variant="small"
-                    className="flex items-center gap-1 text-xs text-gray-600"
-                  >
-                    <ClockIcon />
-                    13 minutes ago
-                  </Typography>
-                </div>
-              </MenuItem>
-              <MenuItem className="flex items-center gap-4 py-2 pr-8 pl-2">
-                <Avatar
-                  variant="circular"
-                  alt="natali craig"
-                  src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1061&q=80"
-                />
-                <div className="flex flex-col gap-1">
-                  <Typography
-                    variant="small"
-                    color="gray"
-                    className="font-normal"
-                  >
-                    <span className="font-medium text-blue-gray-900">
-                      Natali
-                    </span>{" "}
-                    reply to your email
-                  </Typography>
-                  <Typography
-                    variant="small"
-                    className="flex items-center gap-1 text-xs text-gray-600"
-                  >
-                    <ClockIcon />a hour ago
-                  </Typography>
-                </div>
-              </MenuItem>
-              <MenuItem className="flex items-center gap-4 py-2 pr-8 pl-2">
-                <Avatar
-                  variant="circular"
-                  alt="paypal"
-                  src="https://dwglogo.com/wp-content/uploads/2016/08/PayPal_Logo_Icon.png"
-                />
-                <div className="flex flex-col gap-1">
-                  <Typography
-                    variant="small"
-                    color="gray"
-                    className="font-normal"
-                  >
-                    <span className="font-medium text-blue-gray-900">
-                      PayPal
-                    </span>{" "}
-                    you&apos;ve received a payment.
-                  </Typography>
-                  <Typography
-                    variant="small"
-                    className="flex items-center gap-1 text-xs text-gray-600"
-                  >
-                    <ClockIcon />5 hours ago
-                  </Typography>
-                </div>
-              </MenuItem>
-            </MenuList>
-          </Menu>
-        </div>
-      </div>
       <div>
         <Menu>
           <MenuHandler>
             <Avatar
               variant="circular"
               alt="tania andrew"
-              className="cursor-pointer mt-4 mr-5 h-9 w-9 hover:animate-pulse"
+              className="cursor-pointer mt-4 mr-16 h-9 w-9"
               src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
             />
           </MenuHandler>
@@ -357,29 +240,8 @@ function Navbar() {
               </Typography>
             </MenuItem>
             <a/></a>
-            <a href="/Setting">
-            <MenuItem className="flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="h-4 w-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16.712 4.33a9.027 9.027 0 011.652 1.306c.51.51.944 1.064 1.306 1.652M16.712 4.33l-3.448 4.138m3.448-4.138a9.014 9.014 0 00-9.424 0M19.67 7.288l-4.138 3.448m4.138-3.448a9.014 9.014 0 010 9.424m-4.138-5.976a3.736 3.736 0 00-.88-1.388 3.737 3.737 0 00-1.388-.88m2.268 2.268a3.765 3.765 0 010 2.528m-2.268-4.796a3.765 3.765 0 00-2.528 0m4.796 4.796c-.181.506-.475.982-.88 1.388a3.736 3.736 0 01-1.388.88m2.268-2.268l4.138 3.448m0 0a9.027 9.027 0 01-1.306 1.652c-.51.51-1.064.944-1.652 1.306m0 0l-3.448-4.138m3.448 4.138a9.014 9.014 0 01-9.424 0m5.976-4.138a3.765 3.765 0 01-2.528 0m0 0a3.736 3.736 0 01-1.388-.88 3.737 3.737 0 01-.88-1.388m2.268 2.268L7.288 19.67m0 0a9.024 9.024 0 01-1.652-1.306 9.027 9.027 0 01-1.306-1.652m0 0l4.138-3.448M4.33 16.712a9.014 9.014 0 010-9.424m4.138 5.976a3.765 3.765 0 010-2.528m0 0c.181-.506.475-.982.88-1.388a3.736 3.736 0 011.388-.88m-2.268 2.268L4.33 7.288m6.406 1.18L7.288 4.33m0 0a9.024 9.024 0 00-1.652 1.306A9.025 9.025 0 004.33 7.288"
-                />
-              </svg>
-              <Typography variant="small" className="font-normal">
-                Setting & Customization
-              </Typography>
-            </MenuItem>
-            </a>
             <hr className="my-2 border-blue-gray-50" />
-            <a href="/Login">
+            <a href="/Login" onClick={() => {dispatch(reset())}}>
             <MenuItem className="flex items-center gap-2 ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

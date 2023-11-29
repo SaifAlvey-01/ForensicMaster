@@ -10,6 +10,8 @@ import {
   name_validation,
 } from './utils/inputValidations';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 function EditProfile() {
   
@@ -22,9 +24,11 @@ function EditProfile() {
     new: "",
   });
 
+  
 
+  const emaill = window.localStorage.getItem("email");
+  console.log(emaill);
   const getUser = async () => {
-    let emaill = "saifi@gmail.com";
     try {
       let res = await axios.post("http://localhost:8000/api/user/single-user", {
         params: {
@@ -88,9 +92,14 @@ function EditProfile() {
     setUser(data);
   })
 
+  const navigate = useNavigate()
   useEffect(() => {
+  
+    if (window.localStorage.getItem("email") != "x"){
+      navigate('/')
+    }
     getUser();
-  }, []);
+  })
 
     return (
       

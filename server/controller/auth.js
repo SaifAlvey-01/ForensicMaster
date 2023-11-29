@@ -29,6 +29,7 @@ class Auth {
     let { name, email, password, cPassword } = req.body;
     let contact = "na";
     let address = "na";
+    let plan = 0;
     let error = {};
     if (!name || !email || !password || !cPassword) {
       error = {
@@ -74,6 +75,7 @@ class Auth {
                 email,
                 contact,
                 address,
+                plan,
                 password,
                 // ========= Here role 1 for admin signup role 0 for customer signup =========
                 userRole: 1, // Field Name change to userRole from role

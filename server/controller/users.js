@@ -85,9 +85,7 @@ class User {
       } else 
         {
         const oldPassCheck = await bcrypt.compare(old, data.password);
-        console.log(oldPassCheck);
         if (oldPassCheck) {
-          console.log("ii");
           let newPassword = bcrypt.hashSync(newp, 10);
       let currentUser = userModel.findOneAndUpdate({ "email": emaill }, { "$set": { "username": username, "email": emaill, "address": address, "contact": contact, "password": newPassword, updatedAt: Date.now()}});
       currentUser.exec((err, result) => {
@@ -116,10 +114,9 @@ class User {
         const oldPassCheck = await bcrypt.compare(pass, data.password);
         
         if (oldPassCheck) {
-          console.log("i");
           let currentUser = userModel.deleteOne({"email":emaill});
           currentUser.exec((err, result) => {
-            console.log("i");
+            console.log("in");
             if (err) console.log(err);
             return res.json({ success: "User deleted successfully" });
           });

@@ -8,6 +8,8 @@ import {
   email_validation,
 } from './utils/inputValidations';
 import axios from "axios";
+import { useDispatch } from 'react-redux'
+import { setUser } from '../state/user/userSlice';
 
 function ForgotPass() {
 
@@ -17,18 +19,20 @@ function ForgotPass() {
     email: ""
   });
 
+  const dispatch = useDispatch();
+
   const onSubmit = methods.handleSubmit(data => {
     console.log(data)
+    dispatch(setUser({email: data.email, plan: 0, dark: 0}));
     methods.reset()
     setSuccess(true)
     formSubmit(data);
   })
 
-
   const alert = (msg) => <div className="text-xs text-red-500">{msg}</div>;
 
   const formSubmit = async (data) => {
-
+  
     setData({
       email: data.email,
     });
@@ -39,10 +43,7 @@ function ForgotPass() {
         }
         
       });
-      setData({
-        email: res.data.User.email,
-      });
-      console.log(res.data.User.email);
+      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -52,6 +53,7 @@ function ForgotPass() {
     e.preventDefault();
     onSubmit();
   }
+
   return (
     <div>
       <div className="h-[745px] w-screen md:px-48 lg:px-[430px] py-5" style = {{background: `url(${logo1})`}}>
@@ -82,5 +84,4 @@ function ForgotPass() {
     </div>
   )
 }
-
 export default ForgotPass;

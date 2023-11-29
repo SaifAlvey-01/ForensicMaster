@@ -4,7 +4,7 @@ import image from "../assets/images/bgpayment.png";
 import { PhoneFilled, MailFilled, EnvironmentFilled } from '@ant-design/icons';
 import logo from "./../assets/images/button.png";
 import Navbar from "./Navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from './input';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
@@ -13,9 +13,18 @@ import {
   name_validation,
   num_validation
 } from './utils/inputValidations';
+import { useNavigate } from 'react-router-dom';
 
 
 function ContactUs() {
+
+  const navigate = useNavigate()
+  useEffect(() => {
+  
+    if (window.localStorage.getItem("email") != "x"){
+      navigate('/')
+    }
+  })
 
   const methods = useForm()
   const [success, setSuccess] = useState(false)

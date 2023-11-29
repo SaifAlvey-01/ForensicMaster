@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import bg1 from "./../assets/images/bgupload1.png";
 import bg2 from "./../assets/images/bgupload2.png";
@@ -15,6 +16,13 @@ function fileSizeValidator(file) {
   }
 
 function AudioEnhancement() {
+  const navigate = useNavigate()
+  useEffect(() => {
+  
+    if (window.localStorage.getItem("email") != "x"){
+      navigate('/')
+    }
+  })
     const [files, setFiles] = React.useState([]);
     const onDrop = React.useCallback((acceptedFiles) => {
         console.log(acceptedFiles);

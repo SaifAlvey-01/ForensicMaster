@@ -1,14 +1,32 @@
 
-import React from "react";
+import React, { useEffect} from "react";
 import image from "../../assets/images/bgpayment.png";
 import image1 from "../../assets/images/SiteLogo.png";
 import image2 from "../../assets/images/icon4.png";
 import image3 from "../../assets/images/lite.png";
 import image4 from "../../assets/images/pro.png";
 import image5 from "../../assets/images/team.png";
+// import { useDispatch } from "react-redux"; 
+// import { setUser } from "../../state/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
-export const Hosted = () => (
+function Hosted () {
 
+  const navigate = useNavigate()
+  useEffect(() => {
+  //   var week = Date.now() + 604800000;
+  // var month = Date.now() + 2678400000;
+  // var year = Date.now() + 31622400000;
+  // const dispatch = useDispatch();
+  // dispatch(setUser({email: window.localStorage.getItem("email"), plan: week, dark: 0}));
+    if (window.localStorage.getItem("email") != "x"){
+      navigate('/')
+    }
+  })
+
+return(
+
+  
     <div>
       <div className="" style={{ background: `url(${image})`, backgroundPosition: 'center' }}>
         <div className="flex">
@@ -22,12 +40,13 @@ export const Hosted = () => (
         <div className="py-20 lg:flex lg:justify-between display: inline-grid grid-cols-1 md:grid-cols-2 md:px-20 px-20 lg:px-32">
           <div className="bg-[#0C2C37] p-6 w-80 h-96 rounded-lg mb-10 md:ml-5 lg:ml-0">
             <img className="h-min pb-5 w-min" src={image3} alt="Logo" />
-            <h3 className="fontFamily:Roboto text-white mb-4 text-sm"><span className="font-bold text-3xl mr-2">$7</span>/ month</h3>
+            <h3 className="fontFamily:Roboto text-white mb-4 text-sm"><span className="font-bold text-3xl mr-2">$7</span>/ week</h3>
             <h3 className="fontFamily:Roboto text-white text-sm mb-5 italic">Just using this for yourself? Lite is 
             the way to go for the lites platform.</h3>
             <form action="http://localhost:8000/hosted/create-checkout-session" method="POST">
             <input type="hidden"  name="amount" value={7}/> 
       <input type="hidden" name="product_name" value="Weekly Subscription"/>
+      
             <button className="bg-[#127FBF] cursor-poiter mb-5 hover:animate-bounce w-[260px] h-10 text-white font-semibold rounded-lg">Select Lite</button>
             </form>
             <hr className="text-white w-full"/>
@@ -53,6 +72,7 @@ export const Hosted = () => (
             <form action="http://localhost:8000/hosted/create-checkout-session" method="POST">
             <input type="hidden"  name="amount" value={19}/> 
       <input type="hidden" name="product_name" value="Monthly Subscription"/>
+      
             <button className="bg-[#127FBF] cursor-poiter mb-5 hover:animate-bounce w-[260px] h-10 text-white font-semibold rounded-lg">Select Pro</button>
             </form>
             <hr className="text-white w-full"/>
@@ -73,11 +93,12 @@ export const Hosted = () => (
           </div>
           <div className="bg-[#0C2C37] p-6 w-80 h-96 rounded-lg mb-10 md:ml-5 lg:ml-0">
             <img className="h-min pb-5 w-min" src={image5} alt="Logo" />
-            <h3 className="fontFamily:Roboto text-white mb-4 text-sm"><span className="font-bold text-3xl mr-2">$31</span>/ month</h3>
+            <h3 className="fontFamily:Roboto text-white mb-4 text-sm"><span className="font-bold text-3xl mr-2">$31</span>/ year</h3>
             <h3 className="fontFamily:Roboto text-white text-sm mb-5 italic">Just using for friends and family? Team is the way to go for the teams platform.</h3>
             <form action="http://localhost:8000/hosted/create-checkout-session" method="POST">
             <input type="hidden"  name="amount" value={31}/> 
       <input type="hidden" name="product_name" value="Yearly Subscription"/>
+      
             <button className="bg-[#127FBF] cursor-poiter mb-5 hover:animate-bounce w-[260px] h-10 text-white font-semibold rounded-lg">Select Team</button>
             </form>
             <hr className="text-white w-full"/>
@@ -101,3 +122,6 @@ export const Hosted = () => (
     </div>
   
 );
+}
+
+export default Hosted;
