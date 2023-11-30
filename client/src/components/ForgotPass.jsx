@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo1 from "./../assets/images/bglogin.png";
 import logo6 from "./../assets/images/button.png";
 import { useState } from "react";
@@ -10,9 +10,25 @@ import {
 import axios from "axios";
 import { useDispatch } from 'react-redux'
 import { setUser } from '../state/user/userSlice';
+import Darkmode from "darkmode-js";
 
 function ForgotPass() {
 
+  const options = {
+    bottom: '32px',
+    right: '32px',
+    left: 'unset',
+    time: '0.7s',
+    mixColor: '#fff',
+    backgroundColor: '#fff',
+    buttonColorDark: '#100f2c',
+    buttonColorLight: '#fff',
+    saveInCookies: true,
+    label: '🌓',
+    autoMatchOsTheme: true
+  }
+  const darkmode = new Darkmode(options);
+  darkmode.showWidget();
   const methods = useForm()
   const [success, setSuccess] = useState(false)
   const [data, setData] = useState({
@@ -53,7 +69,20 @@ function ForgotPass() {
     e.preventDefault();
     onSubmit();
   }
+  useEffect(() => {
+    if(window.localStorage.getItem("dark") == 0){
+      darkmode.toggle();
+    }})
 
+    if(darkmode.isActivated() == true){
+      dispatch(setUser({
+        email: window.localStorage.getItem("email"),
+        plan: window.localStorage.getItem("plan"),
+        dark: 1,
+      }));
+      darkmode.toggle();
+      console.log(window.localStorage.getItem("dark"));
+    }
   return (
     <div>
       <div className="h-[745px] w-screen md:px-48 lg:px-[430px] py-5" style = {{background: `url(${logo1})`}}>

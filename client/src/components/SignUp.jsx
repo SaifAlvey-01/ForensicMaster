@@ -10,10 +10,30 @@ import {
   password_validation,
 } from './utils/inputValidations';
 import { useNavigate } from "react-router-dom";
+import Darkmode from "darkmode-js";
+import { useDispatch } from "react-redux";
 import { setUser } from "../state/user/userSlice";
 
 function SignUp() {
-
+  useEffect(() => {
+    if(window.localStorage.getItem("dark") == 0){
+      darkmode.toggle();
+    }})
+  const options = {
+    bottom: '32px',
+    right: '32px',
+    left: 'unset',
+    time: '0.7s',
+    mixColor: '#fff',
+    backgroundColor: '#fff',
+    buttonColorDark: '#100f2c',
+    buttonColorLight: '#fff',
+    saveInCookies: true,
+    label: '🌓',
+    autoMatchOsTheme: true
+  }
+  const darkmode = new Darkmode(options);
+  darkmode.showWidget();
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -96,6 +116,17 @@ function SignUp() {
   };
 
   
+  const dispatch = useDispatch();
+  
+  if(darkmode.isActivated() == true){
+    dispatch(setUser({
+      email: window.localStorage.getItem("email"),
+      plan: window.localStorage.getItem("plan"),
+      dark: 1,
+    }));
+    darkmode.toggle();
+    console.log(window.localStorage.getItem("dark"));
+  }
 
   return (
     <div>

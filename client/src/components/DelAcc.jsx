@@ -8,15 +8,42 @@ import {
   password_validation,
 } from './utils/inputValidations';
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { reset } from "../state/user/userSlice";
+import Darkmode from "darkmode-js";
 
 function DelAcc() {
+  const options = {
+    bottom: '32px',
+    right: '32px',
+    left: 'unset',
+    time: '0.7s',
+    mixColor: '#fff',
+    backgroundColor: '#fff',
+    buttonColorDark: '#100f2c',
+    buttonColorLight: '#fff',
+    saveInCookies: true,
+    label: '🌓',
+    autoMatchOsTheme: true
+  }
+  const darkmode = new Darkmode(options);
+  darkmode.showWidget();
+  if(darkmode.isActivated() == true){
+    dispatch(setUser({
+      email: window.localStorage.getItem("email"),
+      plan: window.localStorage.getItem("plan"),
+      dark: 1,
+    }));
+    darkmode.toggle();
+  }
+
   const navigate = useNavigate()
   const dispatch = useDispatch();
   useEffect(() => {
-  
+    if(window.localStorage.getItem("dark") == 0){
+      darkmode.toggle();
+    }
     if (window.localStorage.getItem("email") == "x"){
       navigate('/')
     }

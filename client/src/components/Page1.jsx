@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import image1 from "./../assets/images/bg1.png";
 import image2 from "./../assets/images/bg2.png";
 import image3 from "./../assets/images/bg3.jpeg";
@@ -26,8 +26,44 @@ import logo21 from "./../assets/images/txt2.png";
 import logo22 from "./../assets/images/img6.png";
 import logo23 from "./../assets/images/bg8.png";
 import { ArrowDownOutlined } from '@ant-design/icons';
+import Darkmode from "darkmode-js";
+import { useDispatch } from "react-redux";
+import { setUser } from "../state/user/userSlice";
 
 function Page() {
+useEffect(() => {
+    if(window.localStorage.getItem("dark") == 0){
+      darkmode.toggle();
+    }})
+
+  const options = {
+    bottom: '32px',
+    right: '32px',
+    left: 'unset',
+    time: '0.7s',
+    mixColor: '#fff',
+    backgroundColor: '#fff',
+    buttonColorDark: '#100f2c',
+    buttonColorLight: '#fff',
+    saveInCookies: true,
+    label: '🌓',
+    autoMatchOsTheme: true
+  }
+  const darkmode = new Darkmode(options);
+  darkmode.showWidget();
+   const dispatch = useDispatch();
+  
+  if(darkmode.isActivated() == true){
+    dispatch(setUser({
+      email: window.localStorage.getItem("email"),
+      plan: window.localStorage.getItem("plan"),
+      dark: 1,
+    }));
+    darkmode.toggle();
+    console.log(window.localStorage.getItem("dark"));
+  }
+
+  
   return (
     <>
       <div id="home" className="w-min">

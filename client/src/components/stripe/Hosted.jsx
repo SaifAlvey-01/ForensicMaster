@@ -6,16 +6,18 @@ import image2 from "../../assets/images/icon4.png";
 import image3 from "../../assets/images/lite.png";
 import image4 from "../../assets/images/pro.png";
 import image5 from "../../assets/images/team.png";
-// import { useDispatch } from "react-redux"; 
-// import { setUser } from "../../state/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../state/user/userSlice";
 import axios from "axios";
+import Darkmode from "darkmode-js";
 
 function Hosted () {
   const navigate = useNavigate()
   useEffect(() => {
+    if(window.localStorage.getItem("dark") == 0){
+      darkmode.toggle();
+    }
     getPlan();
   if (window.localStorage.getItem("email") != "x"){
   if (window.localStorage.getItem("plan") > Date.now()){
@@ -51,6 +53,31 @@ else if (window.localStorage.getItem("email") == "x"){
     } catch (error) {
       console.log(error);
     }
+  }
+
+  const options = {
+    bottom: '32px',
+    right: '32px',
+    left: 'unset',
+    time: '0.7s',
+    mixColor: '#fff',
+    backgroundColor: '#fff',
+    buttonColorDark: '#100f2c',
+    buttonColorLight: '#fff',
+    saveInCookies: false,
+    label: '🌓',
+    autoMatchOsTheme: true
+  }
+  const darkmode = new Darkmode(options);
+  darkmode.showWidget();
+  if(darkmode.isActivated() == true){
+    dispatch(setUser({
+      email: window.localStorage.getItem("email"),
+      plan: window.localStorage.getItem("plan"),
+      dark: 1,
+    }));
+    darkmode.toggle();
+    console.log(window.localStorage.getItem("dark"));
   }
 return(
 
