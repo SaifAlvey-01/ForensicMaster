@@ -40,8 +40,8 @@ function Login() {
         }
         
       });
-      setPlan(res.data.plan.plan);
-      console.log(res.data.plan.plan);
+      setPlan(res.data.Plan.plan);
+      console.log(res.data.Plan.plan);
     } catch (error) {
       console.log(error);
     }

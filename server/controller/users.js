@@ -132,11 +132,11 @@ class User {
       return res.json({ error: "All filled must be required" });
     } else {
       try {
-        let plan = await planModel
+        let Plan = await planModel
           .findOne({ "email": emaill });
-        if (plan) {
+        if (Plan) {
           console.log("in")
-          return res.json({ plan });
+          return res.json({ Plan });
         }
       } catch (err) {
         console.log(err);

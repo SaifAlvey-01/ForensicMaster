@@ -42,9 +42,10 @@ function Profile() {
       navigate('/')
     }
     else if (window.localStorage.getItem("email") != "x"){
-      if (window.localStorage.getItem("plan") <= 0){
+      if (window.localStorage.getItem("plan") <= Date.now()){
         navigate("/Plans")
-        }}
+        }
+      }
     getUser();
   })
 

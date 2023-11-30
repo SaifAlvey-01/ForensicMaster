@@ -8,25 +8,6 @@ router.post('/create-checkout-session', async (req, res) => {
       name: "Subscription",
     });
     
-    
-    {
-    var amount = req.body.amount;
-    var email = req.body.product_name;
-    if(amount == 7){
-      var plan = Date.now() + 604800000;
-    }
-    else if(amount == 19){
-      var plan = Date.now() + 2678400000;
-    }
-    else if(amount == 31){
-      var plan = Date.now() + 31622400000;
-    }
-    console.log(email, plan);
-    plansController.addPlan(email, plan);
-    }
-
-
-    
     if(product){
         var price = await stripe.prices.create({
           product: `${product?.id}`,
@@ -47,6 +28,25 @@ router.post('/create-checkout-session', async (req, res) => {
         success_url: 'http://localhost:5173/EditProfile',
         cancel_url: 'http://localhost:5173/Plans',
       });
+          
+    
+    {
+      var amount = req.body.amount;
+      var email = req.body.product_name;
+      if(amount == 7){
+        var plan = Date.now() + 604800000;
+      }
+      else if(amount == 19){
+        var plan = Date.now() + 2678400000;
+      }
+      else if(amount == 31){
+        var plan = Date.now() + 31622400000;
+      }
+      console.log(email, plan);
+      plansController.addPlan(email, plan);
+      }
+  
+  
       console.log(session)
       return res.redirect(303, session?.url);
     }

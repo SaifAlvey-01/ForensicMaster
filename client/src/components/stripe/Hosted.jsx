@@ -9,16 +9,19 @@ import image5 from "../../assets/images/team.png";
 // import { useDispatch } from "react-redux"; 
 // import { setUser } from "../../state/user/userSlice";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { setUser } from "../../state/user/userSlice";
+import axios from "axios";
 
 function Hosted () {
   const navigate = useNavigate()
   useEffect(() => {
+    getPlan();
   if (window.localStorage.getItem("email") != "x"){
-  if (window.localStorage.getItem("plan") > 0){
+  if (window.localStorage.getItem("plan") > Date.now()){
       navigate("/Profile")
   }
-  else if (window.localStorage.getItem("plan") <= 0){
+  else if (window.localStorage.getItem("plan") <= Date.now()){
     navigate("/Plans")
 }
 else if (window.localStorage.getItem("email") == "x"){
@@ -26,8 +29,29 @@ else if (window.localStorage.getItem("email") == "x"){
     }
   }
   })
- 
+  const [plan, setPlan] = useState(0);
+  const dispatch = useDispatch();
 
+  const getPlan = async () => {
+    const emaill = window.localStorage.getItem("email");
+    try {
+      let res = await axios.post("http://localhost:8000/api/user/getPlan", {
+        params: {
+          email: emaill
+        }
+        
+      });
+      setPlan(res.data.Plan.plan);
+      console.log(res.data.Plan.plan);
+      dispatch(setUser({
+        email: window.localStorage.getItem("email"),
+        plan: res.data.Plan.plan,
+        dark: 0,
+      }));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 return(
 
   
