@@ -38,12 +38,19 @@ function Profile() {
   const navigate = useNavigate()
   useEffect(() => {
   
-    if (window.localStorage.getItem("email") != "x"){
+    if (window.localStorage.getItem("email") == "x"){
       navigate('/')
     }
+    else if (window.localStorage.getItem("email") != "x"){
+      if (window.localStorage.getItem("plan") <= 0){
+        navigate("/Plans")
+        }}
     getUser();
   })
 
+  const Go = () => {
+    navigate("/DelAcc")
+  }
     return (
       
         <div className="">
@@ -57,7 +64,7 @@ function Profile() {
               <p className="ml-[60px] mb-1 italic mt-14 text-[#2e3031] fontFamily:Roboto text-md"><b>Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>{dataa.email}</p>
               <p className=" ml-[60px] mb-1 mt-14 italic text-[#2e3031] fontFamily:Roboto text-md"><b>Address:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>{dataa.address}</p>
               <p className=" ml-[60px] mb-1 mt-14 italic text-[#2e3031] fontFamily:Roboto text-md"><b>Contact:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>{dataa.contact}</p>
-              <a href="/DelAcc"><button className="h-10 mt-14 ml-24 mb-16 fontFamily: Roboto text-white text-lg w-[300px] rounded-3xl hover:animate-pulse border-2 border-red-800" type="submit"><p className="text-red-800">Delete Account</p></button></a>
+              <button onClick={(e) => {Go(e)}} className="h-10 mt-14 ml-24 mb-16 fontFamily: Roboto text-white text-lg w-[300px] rounded-3xl hover:animate-pulse border-2 border-red-800" type="submit"><p className="text-red-800">Delete Account</p></button>
             </form>
           </div>
         </div>

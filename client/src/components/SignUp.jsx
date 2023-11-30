@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo1 from "./../assets/images/bgsignup.png";
 import logo6 from "./../assets/images/button.png";
 import { signupReq } from "./ProfileFetch";
@@ -9,6 +9,8 @@ import {
   email_validation,
   password_validation,
 } from './utils/inputValidations';
+import { useNavigate } from "react-router-dom";
+import { setUser } from "../state/user/userSlice";
 
 function SignUp() {
 
@@ -22,7 +24,7 @@ function SignUp() {
     success: false,
   });
 
-
+  const navigate = useNavigate()
   const methods = useForm()
   const [success, setSuccess] = useState(false)
 
@@ -77,6 +79,7 @@ function SignUp() {
           cPassword: "",
         });
       } else if (responseData.success) {
+        navigate("/Login");
         setData({
           success: responseData.success,
           name: "",
@@ -93,6 +96,7 @@ function SignUp() {
   };
 
   
+
   return (
     <div>
       <div className="h-[745px] w-screen md:px-48 lg:px-[430px] py-5" style = {{background: `url(${logo1})`}}>

@@ -19,9 +19,13 @@ function ImageDetection() {
   const navigate = useNavigate()
   useEffect(() => {
   
-    if (window.localStorage.getItem("email") != "x"){
+    if (window.localStorage.getItem("email") == "x"){
       navigate('/')
     }
+    else if (window.localStorage.getItem("email") != "x"){
+      if (window.localStorage.getItem("plan") <= 0){
+        navigate("/Plans")
+        }}
   })
     const [files, setFiles] = React.useState([]);
     const onDrop = React.useCallback((acceptedFiles) => {

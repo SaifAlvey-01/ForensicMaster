@@ -1,5 +1,5 @@
 
-import React, { useEffect} from "react";
+import React, { useEffect, useState} from "react";
 import image from "../../assets/images/bgpayment.png";
 import image1 from "../../assets/images/SiteLogo.png";
 import image2 from "../../assets/images/icon4.png";
@@ -10,19 +10,23 @@ import image5 from "../../assets/images/team.png";
 // import { setUser } from "../../state/user/userSlice";
 import { useNavigate } from "react-router-dom";
 
-function Hosted () {
 
+function Hosted () {
   const navigate = useNavigate()
   useEffect(() => {
-  //   var week = Date.now() + 604800000;
-  // var month = Date.now() + 2678400000;
-  // var year = Date.now() + 31622400000;
-  // const dispatch = useDispatch();
-  // dispatch(setUser({email: window.localStorage.getItem("email"), plan: week, dark: 0}));
-    if (window.localStorage.getItem("email") != "x"){
+  if (window.localStorage.getItem("email") != "x"){
+  if (window.localStorage.getItem("plan") > 0){
+      navigate("/Profile")
+  }
+  else if (window.localStorage.getItem("plan") <= 0){
+    navigate("/Plans")
+}
+else if (window.localStorage.getItem("email") == "x"){
       navigate('/')
     }
+  }
   })
+ 
 
 return(
 
@@ -45,7 +49,7 @@ return(
             the way to go for the lites platform.</h3>
             <form action="http://localhost:8000/hosted/create-checkout-session" method="POST">
             <input type="hidden"  name="amount" value={7}/> 
-      <input type="hidden" name="product_name" value="Weekly Subscription"/>
+      <input type="hidden" name="product_name" value={window.localStorage.getItem("email")}/>
       
             <button className="bg-[#127FBF] cursor-poiter mb-5 hover:animate-bounce w-[260px] h-10 text-white font-semibold rounded-lg">Select Lite</button>
             </form>
@@ -71,7 +75,7 @@ return(
             <h3 className="fontFamily:Roboto text-white text-sm mb-5 italic">Just using this for yourself? Pro is the way to go for the professional platform.</h3>
             <form action="http://localhost:8000/hosted/create-checkout-session" method="POST">
             <input type="hidden"  name="amount" value={19}/> 
-      <input type="hidden" name="product_name" value="Monthly Subscription"/>
+      <input type="hidden" name="product_name" value={window.localStorage.getItem("email")}/>
       
             <button className="bg-[#127FBF] cursor-poiter mb-5 hover:animate-bounce w-[260px] h-10 text-white font-semibold rounded-lg">Select Pro</button>
             </form>
@@ -97,7 +101,7 @@ return(
             <h3 className="fontFamily:Roboto text-white text-sm mb-5 italic">Just using for friends and family? Team is the way to go for the teams platform.</h3>
             <form action="http://localhost:8000/hosted/create-checkout-session" method="POST">
             <input type="hidden"  name="amount" value={31}/> 
-      <input type="hidden" name="product_name" value="Yearly Subscription"/>
+      <input type="hidden" name="product_name" value={window.localStorage.getItem("email")}/>
       
             <button className="bg-[#127FBF] cursor-poiter mb-5 hover:animate-bounce w-[260px] h-10 text-white font-semibold rounded-lg">Select Team</button>
             </form>

@@ -8,16 +8,22 @@ import {
   password_validation,
 } from './utils/inputValidations';
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { reset } from "../state/user/userSlice";
 
 function DelAcc() {
   const navigate = useNavigate()
+  const dispatch = useDispatch();
   useEffect(() => {
   
-    if (window.localStorage.getItem("email") != "x"){
+    if (window.localStorage.getItem("email") == "x"){
       navigate('/')
     }
+    else if (window.localStorage.getItem("email") != "x"){
+      if (window.localStorage.getItem("plan") <= 0){
+        navigate("/Plans")
+        }}
     getUser();
   })
 
@@ -26,7 +32,7 @@ function DelAcc() {
     pass: ""
   });
 
-  const emaill = useSelector((state) => state.user.email);
+  const emaill = window.localStorage.getItem("email");
   console.log(emaill);
   const getUser = async () => {
 
@@ -52,8 +58,6 @@ function DelAcc() {
   const setUser = async (dataaa) => {
     setData({ 
       email: dataa.email,
-      address: dataa.address,
-      contact: dataa.contact,
       pass: dataaa.pass,
     });
     console.log(dataaa.pass);
@@ -67,6 +71,8 @@ function DelAcc() {
       
       });
       console.log(res.data);
+      dispatch(reset());
+      navigate("/")
     } catch (error) {
       console.log(error);
     }
@@ -87,10 +93,6 @@ function DelAcc() {
     setSuccess(true)
     setUser(data);
   })
-
-  useEffect(() => {
-    getUser();
-  }, []);
 
   return (
     <div>

@@ -21,9 +21,13 @@ function ContactUs() {
   const navigate = useNavigate()
   useEffect(() => {
   
-    if (window.localStorage.getItem("email") != "x"){
+    if (window.localStorage.getItem("email") == "x"){
       navigate('/')
     }
+    else if (window.localStorage.getItem("email") != "x"){
+      if (window.localStorage.getItem("plan") <= 0){
+        navigate("/Plans")
+        }}
   })
 
   const methods = useForm()

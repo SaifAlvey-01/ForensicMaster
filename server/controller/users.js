@@ -1,5 +1,6 @@
 const userModel = require("../models/users");
 const bcrypt = require("bcryptjs");
+const planModel = require("../models/plan");
 
 class User {
   async getAllUser(req, res) {
@@ -87,7 +88,7 @@ class User {
         const oldPassCheck = await bcrypt.compare(old, data.password);
         if (oldPassCheck) {
           let newPassword = bcrypt.hashSync(newp, 10);
-      let currentUser = userModel.findOneAndUpdate({ "email": emaill }, { "$set": { "username": username, "email": emaill, "address": address, "contact": contact, "password": newPassword, updatedAt: Date.now()}});
+      let currentUser = userModel.findOneAndUpdate({ "email": emaill }, { "$set": { "name": username, "email": emaill, "address": address, "contact": contact, "password": newPassword, updatedAt: Date.now()}});
       currentUser.exec((err, result) => {
         console.log("in");
         if (err) console.log(err);
@@ -124,6 +125,25 @@ class User {
         }
     }}
   }
+
+  async getPlan(req, res) {
+    let emaill = req.body.params.email;
+    if (!emaill) {
+      return res.json({ error: "All filled must be required" });
+    } else {
+      try {
+        let plan = await planModel
+          .findOne({ "email": emaill });
+        if (plan) {
+          console.log("in")
+          return res.json({ plan });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+
 
   async changePassword(req, res) {
     let { uId, oldPassword, newPassword } = req.body;

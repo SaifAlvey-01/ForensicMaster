@@ -30,7 +30,9 @@ export const userSlice = createSlice({
       state.email = "x";
       state.plan = 0;
       state.dark = 0;
-      window.localStorage.clear();
+      window.localStorage.email = "x";
+      window.localStorage.plan = 0;
+      window.localStorage.dark = 0;
     },
   },
 })

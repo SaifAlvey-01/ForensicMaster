@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo1 from "./../assets/images/bglogin.png";
 import logo6 from "./../assets/images/button.png";
 import { useState } from "react";
@@ -11,9 +11,15 @@ import {
 } from './utils/inputValidations';
 import { useDispatch } from "react-redux";
 import { setUser } from "../state/user/userSlice";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
+  useEffect(() => {
+    getPlan();
+  })
 
+  const navigate = useNavigate()
   const methods = useForm()
   const [success, setSuccess] = useState(false)
   const [data, setData] = useState({
@@ -22,9 +28,24 @@ function Login() {
     error: false,
     loading: true,
   });
+  const [plan, setPlan] = useState(0);
 
   const dispatch = useDispatch();
-
+  const getPlan = async () => {
+    const emaill = window.localStorage.getItem("email");
+    try {
+      let res = await axios.post("http://localhost:8000/api/user/getPlan", {
+        params: {
+          email: emaill
+        }
+        
+      });
+      setPlan(res.data.plan.plan);
+      console.log(res.data.plan.plan);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const onSubmit = methods.handleSubmit(data => {
     console.log(data)
     methods.reset()
@@ -58,6 +79,7 @@ function Login() {
         infom(data.email);
         setData({ email: "", password: "", loading: false, error: false });
         localStorage.setItem("jwt", JSON.stringify(responseData));
+        navigate("/Plans");
       }
     } catch (error) {
       console.log(error);
@@ -65,10 +87,11 @@ function Login() {
   };
 
   const infom = (email) => {
+    console.log(plan);
     dispatch(setUser({
       email: email,
-      plan: 0,
-      dark: false,
+      plan: plan,
+      dark: 0,
     }));
   }
 
@@ -108,7 +131,7 @@ function Login() {
             {!data.error ? "" : alert(data.error)}
             <h3 className="font-extralight text-[#b8c1ca] italic ml-[315px] mt-12 fontFamily:Roboto text-sm"><span className="underline hover:text-pink-700"><a href="/ForgotPass">Forgot Password?</a></span></h3>
             </div>
-            <a href="/Plans"><button onClick={(e) => goSubmit(e)} className="h-10 text-extralight ml-[90px] fontFamily: Roboto text-white text-lg w-80 rounded-3xl mt-10 hover:animate-bounce" style={{background: `url(${logo6})`}} type="submit">L&nbsp;O&nbsp;G&nbsp;I&nbsp;N</button></a>
+            <button onClick={(e) => goSubmit(e)} className="h-10 text-extralight ml-[90px] fontFamily: Roboto text-white text-lg w-80 rounded-3xl mt-10 hover:animate-bounce" style={{background: `url(${logo6})`}} type="submit">L&nbsp;O&nbsp;G&nbsp;I&nbsp;N</button>
           </form>
           </FormProvider>
         </div>

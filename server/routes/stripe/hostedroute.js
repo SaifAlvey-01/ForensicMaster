@@ -1,12 +1,32 @@
 const express = require('express');
 const stripe = require('stripe')('sk_test_51Mfmd9EutuvIteRaoAH2dnMlT13qH1mHDjN9dBKyNL64QL3hzg1xWuuck9NWeXJR0Ad0UnvVK1I4e7vmrkp6RIDl00CuvRcwc2');
 const router = express();
+const plansController = require("../../controller/plan");
 
 router.post('/create-checkout-session', async (req, res) => {
     const product = await stripe.products.create({
-      name: req.body.product_name,
+      name: "Subscription",
     });
+    
+    
+    {
+    var amount = req.body.amount;
+    var email = req.body.product_name;
+    if(amount == 7){
+      var plan = Date.now() + 604800000;
+    }
+    else if(amount == 19){
+      var plan = Date.now() + 2678400000;
+    }
+    else if(amount == 31){
+      var plan = Date.now() + 31622400000;
+    }
+    console.log(email, plan);
+    plansController.addPlan(email, plan);
+    }
 
+
+    
     if(product){
         var price = await stripe.prices.create({
           product: `${product?.id}`,
@@ -30,8 +50,6 @@ router.post('/create-checkout-session', async (req, res) => {
       console.log(session)
       return res.redirect(303, session?.url);
     }
-
-
 });
 
 router.get('/success', async(req, res) => {

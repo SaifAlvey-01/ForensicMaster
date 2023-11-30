@@ -10,7 +10,6 @@ import ForgotPass from "./components/ForgotPass";
 import NewPass from "./components/NewPass";
 import ContactUs from "./components/ContactUs";
 import Profile from "./components/Profile";
-import Navbar from "./components/Navbar";
 import ObjectFinding from "./components/ObjectFinding";
 import EditProfile from "./components/EditProfile";
 import DelAcc from "./components/DelAcc";
@@ -25,8 +24,6 @@ import  Hosted  from './components/stripe/Hosted';
 
 
 function App() {
-  const emaill = window.localStorage.getItem("email");
-  const plan = window.localStorage.getItem("plan");
   return (
     <BrowserRouter>
       <Routes>
