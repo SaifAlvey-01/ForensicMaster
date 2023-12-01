@@ -14,10 +14,32 @@ import Darkmode from "darkmode-js";
 
 function Hosted () {
   const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const options = {
+    bottom: '32px',
+    right: '32px',
+    left: 'unset',
+    time: '0.7s',
+    mixColor: '#fff',
+    backgroundColor: '#fff',
+    buttonColorDark: '#100f2c',
+    buttonColorLight: '#fff',
+    saveInCookies: true,
+    label: '🌓',
+    autoMatchOsTheme: true
+  }
+  const darkmode = new Darkmode(options);
+  darkmode.showWidget();
+  if(darkmode.isActivated() == true){
+    dispatch(setUser({
+      email: window.localStorage.getItem("email"),
+      plan: window.localStorage.getItem("plan"),
+      dark: 1,
+    }));
+      
+    console.log(window.localStorage.getItem("dark"));
+  }
   useEffect(() => {
-    if(window.localStorage.getItem("dark") == 0){
-      darkmode.toggle();
-    }
     getPlan();
   if (window.localStorage.getItem("email") != "x"){
   if (window.localStorage.getItem("plan") > Date.now()){
@@ -32,7 +54,7 @@ else if (window.localStorage.getItem("email") == "x"){
   }
   })
   const [plan, setPlan] = useState(0);
-  const dispatch = useDispatch();
+  
 
   const getPlan = async () => {
     const emaill = window.localStorage.getItem("email");
@@ -55,30 +77,6 @@ else if (window.localStorage.getItem("email") == "x"){
     }
   }
 
-  const options = {
-    bottom: '32px',
-    right: '32px',
-    left: 'unset',
-    time: '0.7s',
-    mixColor: '#fff',
-    backgroundColor: '#fff',
-    buttonColorDark: '#100f2c',
-    buttonColorLight: '#fff',
-    saveInCookies: false,
-    label: '🌓',
-    autoMatchOsTheme: true
-  }
-  const darkmode = new Darkmode(options);
-  darkmode.showWidget();
-  if(darkmode.isActivated() == true){
-    dispatch(setUser({
-      email: window.localStorage.getItem("email"),
-      plan: window.localStorage.getItem("plan"),
-      dark: 1,
-    }));
-    darkmode.toggle();
-    console.log(window.localStorage.getItem("dark"));
-  }
 return(
 
   

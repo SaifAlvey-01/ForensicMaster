@@ -13,12 +13,11 @@ import { useNavigate } from "react-router-dom";
 import Darkmode from "darkmode-js";
 import { useDispatch } from "react-redux";
 import { setUser } from "../state/user/userSlice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function SignUp() {
-  useEffect(() => {
-    if(window.localStorage.getItem("dark") == 0){
-      darkmode.toggle();
-    }})
+
   const options = {
     bottom: '32px',
     right: '32px',
@@ -99,7 +98,19 @@ function SignUp() {
           cPassword: "",
         });
       } else if (responseData.success) {
-        navigate("/Login");
+        toast.success('Account Created Successfully!', {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
+          setTimeout(()=> {
+            navigate('/Login');
+           }, 3000);
         setData({
           success: responseData.success,
           name: "",
@@ -124,12 +135,12 @@ function SignUp() {
       plan: window.localStorage.getItem("plan"),
       dark: 1,
     }));
-    darkmode.toggle();
     console.log(window.localStorage.getItem("dark"));
   }
 
   return (
     <div>
+
       <div className="h-[745px] w-screen md:px-48 lg:px-[430px] py-5" style = {{background: `url(${logo1})`}}>
         <div className="bg-white h-[700px] w-[500px] pt-16 rounded-xl">
           <h3 className="font-bold fontFamily:Roboto ml-24 mt-5 mb-3 text-5xl">S&nbsp;&nbsp;I&nbsp;&nbsp;G&nbsp;&nbsp;N&nbsp;&nbsp;U&nbsp;&nbsp;P</h3>
@@ -139,7 +150,6 @@ function SignUp() {
         noValidate
         onSubmit={goSubmit}
         autoComplete="off">   
-        {data.success ? alert(data.success, "green") : ""}
             <div className="">
               <p className="font-extralight ml-[90px] mt-[-15px] mb-1 italic text-[#2e3031] fontFamily:Roboto text-sm">Username</p>
               <Input {...name_validation} className={`${data.error.name ? "ml-[55px] border-red-500" : ""} fontFamily: Roboto px-4 py-2 ml-14 h-9 active:border-pink-800 w-32 mt-[-30px] rounded-md`}
@@ -216,6 +226,7 @@ function SignUp() {
           </FormProvider>
         </div>
       </div>
+      <ToastContainer />
     </div>
   )
 }

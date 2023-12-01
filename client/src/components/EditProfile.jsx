@@ -11,10 +11,14 @@ import {
 } from './utils/inputValidations';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Darkmode from "darkmode-js";
+import { setUser } from "../state/user/userSlice";
+import { useDispatch } from "react-redux";
 
 function EditProfile() {
-  
+
   const [dataa, setData] = useState({
     username: "",
     email: "",
@@ -48,8 +52,32 @@ function EditProfile() {
     }
   }
   
-
-  const setUser = async (dataa) => {
+  const dispatch = useDispatch();
+  const options = {
+    bottom: '32px',
+    right: '32px',
+    left: 'unset',
+    time: '0.7s',
+    mixColor: '#fff',
+    backgroundColor: '#fff',
+    buttonColorDark: '#100f2c',
+    buttonColorLight: '#fff',
+    saveInCookies: true,
+    label: '🌓',
+    autoMatchOsTheme: true
+  }
+  const darkmode = new Darkmode(options);
+  darkmode.showWidget();
+  if(darkmode.isActivated() == true){
+    dispatch(setUser({
+      email: window.localStorage.getItem("email"),
+      plan: window.localStorage.getItem("plan"),
+      dark: 1,
+    }));
+      
+    console.log(window.localStorage.getItem("dark"));
+  }
+  const setUsr = async (dataa) => {
     setData({ username: dataa.name,
       email: dataa.email,
       address: dataa.address,
@@ -70,6 +98,17 @@ function EditProfile() {
         }
       
       });
+      toast.success('Profile Updated Successfully!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+
       console.log(res.data);
     } catch (error) {
       console.log(error);
@@ -89,7 +128,7 @@ function EditProfile() {
     console.log(data)
     methods.reset()
     setSuccess(true)
-    setUser(data);
+    setUsr(data);
   })
 
   const navigate = useNavigate()
@@ -152,6 +191,18 @@ function EditProfile() {
             </FormProvider>
           </div>
         </div>
+        <ToastContainer
+position="top-right"
+autoClose={2000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+/>
         </div>
       )
 }

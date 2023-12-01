@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { reset } from '../state/user/userSlice';
-import { DarkModeSwitch } from 'react-toggle-dark-mode';
+
 
 
 function Navbar() {

@@ -31,10 +31,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../state/user/userSlice";
 
 function Page() {
-useEffect(() => {
-    if(window.localStorage.getItem("dark") == 0){
-      darkmode.toggle();
-    }})
+
 
   const options = {
     bottom: '32px',
@@ -59,7 +56,6 @@ useEffect(() => {
       plan: window.localStorage.getItem("plan"),
       dark: 1,
     }));
-    darkmode.toggle();
     console.log(window.localStorage.getItem("dark"));
   }
 

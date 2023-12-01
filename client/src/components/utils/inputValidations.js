@@ -11,8 +11,8 @@ export const name_validation = {
       message: 'required',
     },
     maxLength: {
-      value: 30,
-      message: '30 characters max',
+      value: 60,
+      message: '60 characters max',
     },
   },
 }

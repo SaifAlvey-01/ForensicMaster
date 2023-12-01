@@ -14,10 +14,39 @@ import {
   num_validation
 } from './utils/inputValidations';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Darkmode from "darkmode-js";
+import { setUser } from "../state/user/userSlice";
+import { useDispatch } from "react-redux";
 
 
 function ContactUs() {
-
+  const dispatch = useDispatch();
+  const options = {
+    bottom: '32px',
+    right: '32px',
+    left: 'unset',
+    time: '0.7s',
+    mixColor: '#fff',
+    backgroundColor: '#fff',
+    buttonColorDark: '#100f2c',
+    buttonColorLight: '#fff',
+    saveInCookies: true,
+    label: '🌓',
+    autoMatchOsTheme: true
+  }
+  const darkmode = new Darkmode(options);
+  darkmode.showWidget();
+  if(darkmode.isActivated() == true){
+    dispatch(setUser({
+      email: window.localStorage.getItem("email"),
+      plan: window.localStorage.getItem("plan"),
+      dark: 1,
+    }));
+      
+    console.log(window.localStorage.getItem("dark"));
+  }
   const navigate = useNavigate()
   useEffect(() => {
   
@@ -46,6 +75,16 @@ function ContactUs() {
     onSubmit();
     emailjs.sendForm('service_pecke2l', 'template_ysuqmmp', form.current, 'pC2veGfo4K66ngFBd')
       .then((result) => {
+        toast.success('Feedback Sent!', {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
           console.log(result.text);
       }, (error) => {
           console.log(error.text);
@@ -99,6 +138,19 @@ function ContactUs() {
         </FormProvider>
       </div>
     </div>
+    
+<ToastContainer
+position="top-right"
+autoClose={2000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+/>
     </div>
   )
 }

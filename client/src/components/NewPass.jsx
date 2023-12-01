@@ -10,9 +10,13 @@ import {
 import axios from "axios";
 import Darkmode from "darkmode-js";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { setUser } from "../state/user/userSlice";
 
 function NewPass() {
+  const navigate = useNavigate();
   const options = {
     bottom: '32px',
     right: '32px',
@@ -35,7 +39,7 @@ function NewPass() {
       plan: window.localStorage.getItem("plan"),
       dark: 1,
     }));
-    darkmode.toggle();
+    
     console.log(window.localStorage.getItem("dark"));
   }
   const [dataa, setData] = useState({
@@ -72,7 +76,7 @@ function NewPass() {
   const alert = (msg, type) => (
     <p className={`text-xs ml-[88px] mt-[40px] text-${type}-500`}>{msg}</p>
   );
-  const setUser = async (dataaa) => {
+  const setUsr = async (dataaa) => {
     setData({  username: dataa.username,
       email: dataa.email,
       address: dataa.address,
@@ -94,6 +98,19 @@ function NewPass() {
         }
       
       });
+      toast.success('Password Changed Successfully!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+setTimeout(()=> {
+          navigate('/Login');
+         }, 3000);
       console.log(res.data);
     } catch (error) {
       console.log(error);
@@ -113,13 +130,11 @@ function NewPass() {
     console.log(data)
     methods.reset()
     setSuccess(true)
-    setUser(data);
+    setUsr(data);
   })
 
   useEffect(() => {
-    if(window.localStorage.getItem("dark") == 0){
-      darkmode.toggle();
-    }
+
     getUser();
   }, []);
 
@@ -175,6 +190,18 @@ function NewPass() {
           </FormProvider>
         </div>
       </div>
+      <ToastContainer
+position="top-right"
+autoClose={2000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+/>
     </div>
   )
 }

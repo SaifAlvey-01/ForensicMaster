@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Darkmode from "darkmode-js";
+import { setUser } from "../state/user/userSlice";
+import { useDispatch } from "react-redux";
 
 function Profile() {
   
@@ -52,6 +55,32 @@ function Profile() {
   const Go = () => {
     navigate("/DelAcc")
   }
+  
+const dispatch = useDispatch();
+const options = {
+  bottom: '32px',
+  right: '32px',
+  left: 'unset',
+  time: '0.7s',
+  mixColor: '#fff',
+  backgroundColor: '#fff',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+darkmode.showWidget();
+if(darkmode.isActivated() == true){
+  dispatch(setUser({
+    email: window.localStorage.getItem("email"),
+    plan: window.localStorage.getItem("plan"),
+    dark: 1,
+  }));
+    
+  console.log(window.localStorage.getItem("dark"));
+}
     return (
       
         <div className="">

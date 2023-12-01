@@ -10,10 +10,13 @@ import {
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { reset } from "../state/user/userSlice";
+import { reset, setUser } from "../state/user/userSlice";
 import Darkmode from "darkmode-js";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function DelAcc() {
+  const dispatch = useDispatch();
   const options = {
     bottom: '32px',
     right: '32px',
@@ -35,15 +38,13 @@ function DelAcc() {
       plan: window.localStorage.getItem("plan"),
       dark: 1,
     }));
-    darkmode.toggle();
+
   }
 
   const navigate = useNavigate()
-  const dispatch = useDispatch();
+
   useEffect(() => {
-    if(window.localStorage.getItem("dark") == 0){
-      darkmode.toggle();
-    }
+
     if (window.localStorage.getItem("email") == "x"){
       navigate('/')
     }
@@ -82,7 +83,7 @@ function DelAcc() {
   const alert = (msg, type) => (
     <p className={`text-xs ml-[88px] mt-[40px] text-${type}-500`}>{msg}</p>
   );
-  const setUser = async (dataaa) => {
+  const setUsr = async (dataaa) => {
     setData({ 
       email: dataa.email,
       pass: dataaa.pass,
@@ -99,7 +100,19 @@ function DelAcc() {
       });
       console.log(res.data);
       dispatch(reset());
-      navigate("/")
+      toast.success('Account Deleted Successfully!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+setTimeout(()=> {
+          navigate('/SignUp');
+         }, 3000);
     } catch (error) {
       console.log(error);
     }
@@ -118,7 +131,7 @@ function DelAcc() {
     console.log(data)
     methods.reset()
     setSuccess(true)
-    setUser(data);
+    setUsr(data);
   })
 
   return (
@@ -155,6 +168,18 @@ function DelAcc() {
           </FormProvider>
         </div>
       </div>
+      <ToastContainer
+position="top-right"
+autoClose={2000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+/>
     </div>
   )
 }

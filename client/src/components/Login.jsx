@@ -14,6 +14,9 @@ import { setUser } from "../state/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Darkmode from "darkmode-js";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Login() {
   const options = {
@@ -32,9 +35,7 @@ function Login() {
   const darkmode = new Darkmode(options);
   darkmode.showWidget();
   useEffect(() => {
-    if(window.localStorage.getItem("dark") == 0){
-      darkmode.toggle();
-    }
+
     getPlan();
   })
   const navigate = useNavigate()
@@ -94,10 +95,22 @@ function Login() {
           password: "",
         });
       } else if (responseData.token) {
+        setTimeout(toast.success('Login Successful!', {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          }), 2000);
         infom(data.email);
         setData({ email: "", password: "", loading: false, error: false });
         localStorage.setItem("jwt", JSON.stringify(responseData));
-        navigate("/Plans");
+        setTimeout(()=> {
+          navigate('/Plans');
+         }, 3000);
       }
     } catch (error) {
       console.log(error);
@@ -126,7 +139,7 @@ function Login() {
       plan: window.localStorage.getItem("plan"),
       dark: 1,
     }));
-    darkmode.toggle();
+      
     console.log(window.localStorage.getItem("dark"));
   }
 
@@ -166,6 +179,18 @@ function Login() {
           </FormProvider>
         </div>
       </div>
+      <ToastContainer
+position="top-right"
+autoClose={2000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="colored"
+/>
     </div>
   )
 }

@@ -11,9 +11,10 @@ import axios from "axios";
 import { useDispatch } from 'react-redux'
 import { setUser } from '../state/user/userSlice';
 import Darkmode from "darkmode-js";
+import { useNavigate } from "react-router-dom";
 
 function ForgotPass() {
-
+const navigate = useNavigate();
   const options = {
     bottom: '32px',
     right: '32px',
@@ -59,6 +60,7 @@ function ForgotPass() {
         }
         
       });
+        navigate('/NewPass');
       console.log(res.data);
     } catch (error) {
       console.log(error);
@@ -69,18 +71,14 @@ function ForgotPass() {
     e.preventDefault();
     onSubmit();
   }
-  useEffect(() => {
-    if(window.localStorage.getItem("dark") == 0){
-      darkmode.toggle();
-    }})
-
+ 
     if(darkmode.isActivated() == true){
       dispatch(setUser({
         email: window.localStorage.getItem("email"),
         plan: window.localStorage.getItem("plan"),
         dark: 1,
       }));
-      darkmode.toggle();
+      
       console.log(window.localStorage.getItem("dark"));
     }
   return (
